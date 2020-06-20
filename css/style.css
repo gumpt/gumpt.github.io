@@ -32,7 +32,7 @@ nav,
 section,
 summary {
     display: block;
-}	
+}
 
 .container {
     max-width: 85%;
@@ -90,7 +90,7 @@ a.skip-main {
     z-index:-999;
 }
 
-a.skip-main:focus, 
+a.skip-main:focus,
 a.skip-main:active {
     left: auto;
     top: 0px;
@@ -147,8 +147,8 @@ blockquote {
 }
 
 p {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 hr {
@@ -241,9 +241,9 @@ article header h1 a {
 }
 
 .post-info {
-    font-size: 0.75em;
+    font-size: 0.8em;
     color: grey;
-    margin-top: 1em;
+    margin-top: 3em;
 }
 
 .post-info a {
@@ -342,7 +342,7 @@ article figcaption {
 }
 
 .pagination {
-    text-align: center;   
+    text-align: center;
 }
 
 .pagination-item {
@@ -370,6 +370,17 @@ article figcaption {
     max-width: 16em;
 }
 
+/* Footnotes */
+
+.footnotes {
+    font-size: 16px;
+}
+
+.footnotes p {
+    margin-top: 0.8em;
+    margin-bottom: 0.8em;
+}
+
 /* Footer */
 
 footer {
@@ -389,7 +400,6 @@ ul.language-select > li {
 }
 
 /* Media Queries */
-/*
 @media (max-width: 840px) {
     .main-wrapper {
         margin: 0;
@@ -401,12 +411,6 @@ ul.language-select > li {
 
     .container {
         max-width: 90%;
-        margin: 0 auto;
-    }
-
-    .pagination-item {
-        padding: 0.5em 0.5em;
-        font-size: 14px;
     }
 
     header {
@@ -432,8 +436,4 @@ ul.language-select > li {
     header nav a {
         margin-left: 5%;
     }
-
-    .post-pagination .pagination-item {
-        max-width: 10em;
-    }
-}*/
+}

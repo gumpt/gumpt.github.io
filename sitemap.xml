@@ -3,11 +3,42 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://blog.gum.pt/tags/c&#43;&#43;/</loc>
+    <loc>https://blog.gum.pt/books/</loc>
+    <lastmod>2020-06-20T12:23:26-07:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog.gum.pt/categories/</loc>
+    <lastmod>2020-06-20T12:23:26-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.gum.pt/categories/explaining-myself/</loc>
+    <lastmod>2020-06-20T12:23:26-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.gum.pt/tags/meta/</loc>
+    <lastmod>2020-06-20T12:23:26-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.gum.pt/</loc>
+    <lastmod>2020-06-20T12:23:26-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.gum.pt/books/purpose/</loc>
+    <lastmod>2020-06-20T12:23:26-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.gum.pt/tags/</loc>
+    <lastmod>2020-06-20T12:23:26-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.gum.pt/tags/c&#43;&#43;/</loc>
   </url>
   
   <url>
@@ -27,15 +58,11 @@
   </url>
   
   <url>
-    <loc>https://blog.gum.pt/</loc>
-  </url>
-  
-  <url>
     <loc>https://blog.gum.pt/posts/</loc>
   </url>
   
   <url>
-    <loc>https://blog.gum.pt/tags/</loc>
+    <loc>https://blog.gum.pt/categories/programming/</loc>
   </url>
   
 </urlset>
