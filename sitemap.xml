@@ -3,39 +3,39 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>blog.gum.pt/tags/c&#43;&#43;/</loc>
+    <loc>https://blog.gum.pt/tags/c&#43;&#43;/</loc>
   </url>
   
   <url>
-    <loc>blog.gum.pt/categories/</loc>
+    <loc>https://blog.gum.pt/categories/</loc>
   </url>
   
   <url>
-    <loc>blog.gum.pt/tags/clang/</loc>
+    <loc>https://blog.gum.pt/tags/clang/</loc>
   </url>
   
   <url>
-    <loc>blog.gum.pt/posts/clang-ast-matchers/</loc>
+    <loc>https://blog.gum.pt/posts/clang-ast-matchers/</loc>
   </url>
   
   <url>
-    <loc>blog.gum.pt/tags/cpp/</loc>
+    <loc>https://blog.gum.pt/tags/cpp/</loc>
   </url>
   
   <url>
-    <loc>blog.gum.pt/tags/llvm/</loc>
+    <loc>https://blog.gum.pt/tags/llvm/</loc>
   </url>
   
   <url>
-    <loc>blog.gum.pt/</loc>
+    <loc>https://blog.gum.pt/</loc>
   </url>
   
   <url>
-    <loc>blog.gum.pt/posts/</loc>
+    <loc>https://blog.gum.pt/posts/</loc>
   </url>
   
   <url>
-    <loc>blog.gum.pt/tags/</loc>
+    <loc>https://blog.gum.pt/tags/</loc>
   </url>
   
 </urlset>
