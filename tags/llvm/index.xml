@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>llvm on notes</title>
-    <link>/tags/llvm/</link>
+    <link>blog.gum.pt/tags/llvm/</link>
     <description>notes (llvm)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-    <atom:link href="/tags/llvm/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="blog.gum.pt/tags/llvm/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Clang AST Matchers</title>
-      <link>/posts/clang-ast-matchers/</link>
+      <link>blog.gum.pt/posts/clang-ast-matchers/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/posts/clang-ast-matchers/</guid>
+      <guid>blog.gum.pt/posts/clang-ast-matchers/</guid>
       <description>&lt;p&gt;One way to cope with lots of possible submitters to a project, each of own may
 have their own definitions of quality, is to enforce a quality bar with
 tooling.  This means everything from running a linter to using static and
