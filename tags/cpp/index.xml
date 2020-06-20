@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cpp on notes</title>
+    <link>/tags/cpp/</link>
+    <description>notes (cpp)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+    <atom:link href="/tags/cpp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Clang AST Matchers</title>
+      <link>/posts/clang-ast-matchers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/clang-ast-matchers/</guid>
+      <description>&lt;p&gt;One way to cope with lots of possible submitters to a project, each of own may
+have their own definitions of quality, is to enforce a quality bar with
+tooling.  This means everything from running a linter to using static and
+runtime analysis to find dormant bugs.&lt;/p&gt;
+&lt;p&gt;Quick list of some completely reasonable things to use:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Linters: &lt;code&gt;clang-format&lt;/code&gt;, &lt;code&gt;flint&lt;/code&gt;, et al.&lt;/li&gt;
+&lt;li&gt;Static analysis: Coverity, &lt;code&gt;scan-build&lt;/code&gt;, cppcheck&lt;/li&gt;
+&lt;li&gt;Runtime analysis: All of the sanitizers
+(&lt;a href=&#34;//clang.llvm.org/docs/UndefinedBehaviorSanitizer.html&#34;&gt;ubsan&lt;/a&gt;,
+&lt;a href=&#34;//clang.llvm.org/docs/AddressSanitizer.html&#34;&gt;asan&lt;/a&gt;,
+&lt;a href=&#34;//clang.llvm.org/docs/ThreadSanitizer.html&#34;&gt;tsan&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;libtooling in llvm/clang provides an amazing library of functions to use when
+other tools don&amp;rsquo;t give you the checks that you want.  The clang docs in general
+are high quality and the documentation on getting started with libtooling&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;
+is very helpful for getting started with using the pre-built tools to find
+common problems.&lt;/p&gt;
+&lt;p&gt;libtooling also provides a handy list of helper functions so that you can write
+your own static analysis tool. There is
+a &lt;a href=&#34;//clang.llvm.org/docs/LibASTMatchersTutorial.html&#34;&gt;tutorial&lt;/a&gt; for set
+of abstract syntax tree (AST, what the compiler builds in order to understand
+your code and uses to determine how to turn it into a real program) matcher
+interface, mostly because I thought the DSL it defined was really
+neat.&lt;/p&gt;
+&lt;p&gt;The DSL lets you define some attibute of AST nodes you want to match on, where
+the attributes can be 1) the type of the node or 2) the type of any of the
+node&amp;rsquo;s ancestors or children in 3) any sort of combination you think is worth
+looking at.  You can then define a callback action to perform when those nodes
+are found to either just log or automatically rewrite the found code.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s say you wanted to build a tool to look for destructors which throw.  You
+could write an AST matcher for a destructor with a throw statement like the
+following:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;DeclarationMatcher ThrowDestructorMatcher &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+    cxxDestructorDecl(
+      hasDescendant(
+        cxxThrowExpr().bind(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;throw&amp;#34;&lt;/span&gt;)
+      )).bind(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;destructor&amp;#34;&lt;/span&gt;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Quick explanation:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;DeclarationMatcher&lt;/code&gt; means this is a &lt;code&gt;Matcher&amp;lt;Decl&amp;gt;&lt;/code&gt; so the root node of the
+AST we&amp;rsquo;re going to get back will be of type &lt;code&gt;Decl&lt;/code&gt;, which makes sense since
+we&amp;rsquo;re looking for &lt;code&gt;cxxDestructorDecl&lt;/code&gt;s.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hasDescendant&lt;/code&gt; belongs to a group of very neat generic matchers.  We don&amp;rsquo;t
+need do any traversal on our own of children and subtrees, the DSL lets us
+specify the relationships we want.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;.bind()&lt;/code&gt; call lets us define an identifier which will map to the nodes
+and let us retrieve them later on in our &lt;code&gt;MatchCallback&lt;/code&gt; (the action to
+perform on finding one of these).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;That AST matcher isn&amp;rsquo;t generic enough though &amp;ndash; what if the exception being
+thrown isn&amp;rsquo;t directly in the destructor, but instead in a function the
+destructor calls?  We&amp;rsquo;d need to make it a little more generic:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;auto&lt;/span&gt; Throws &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; hasDescendant(cxxThrowExpr().bind(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;throw&amp;#34;&lt;/span&gt;));
+&lt;span style=&#34;color:#66d9ef&#34;&gt;auto&lt;/span&gt; FunctionWhichThrows &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; functionDecl(Throws).bind(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;throw_function&amp;#34;&lt;/span&gt;);
+&lt;span style=&#34;color:#66d9ef&#34;&gt;auto&lt;/span&gt; CallsToFunctionWhichThrows &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+    hasDescendant(declRefExpr(to(FunctionWhichThrows)));
+DeclarationMatcher ThrowDestructorMatcher &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+    cxxDestructorDecl(anyOf(
+      Throws,
+      CallsToFunctionWhichThrows
+    )).bind(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;destructor&amp;#34;&lt;/span&gt;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;And we can pull out &amp;ldquo;CallsTo&amp;rdquo; as its own idea, and reuse it to detect
+doubly-nested calls to throws.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;auto&lt;/span&gt; CallsTo &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;
+    [](DeclarationMatcher dm) &lt;span style=&#34;color:#f92672&#34;&gt;-&amp;gt;&lt;/span&gt; DeclarationMatcher {
+      &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;hasDescendant&lt;/span&gt;(declRefExpr(to(dm)));
+    };
+
+&lt;span style=&#34;color:#66d9ef&#34;&gt;auto&lt;/span&gt; CallsToCallsToFunctionWhichThrows &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; CallsTo(CallsToFunctionWhichThrows);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;That&amp;rsquo;s so cool!&lt;/p&gt;
+&lt;p&gt;One limitation, which may not be obvious if you&amp;rsquo;re unaware of how C++
+compilation works, is that the AST parsing facilities libtooling provides are
+scoped to a single compilation/translation-unit only.  To oversimplify, the AST
+for a given function &lt;code&gt;foo&lt;/code&gt; will not have access to the body of symbols which
+are not defined in the same place/file in which &lt;code&gt;foo&lt;/code&gt; is defined.  A trick to
+cope with this is making everything you&amp;rsquo;re interested in a single compilation
+unit similar to a precompiled header.&lt;/p&gt;
+&lt;p&gt;The AST Matchers are really cool and powerful.  Playing with them made me feel
+like I had superpowers to go find bad patterns, whatever they may be and
+wherever they are.  At the very least, looking for smelly code at $WORK is much
+simpler with this out there.&lt;/p&gt;
+&lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34; role=&#34;doc-endnote&#34;&gt;
+&lt;p&gt;The official documentation includes a pair of tutorials:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;//clang.llvm.org/docs/RAVFrontendAction.html&#34;&gt;Frontend Action tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;//clang.llvm.org/docs/LibASTMatchersTutorial.html&#34;&gt;AST Matcher tutorial (again)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;and a very nice &lt;a href=&#34;//clang.llvm.org/docs/LibASTMatchersReference.html&#34;&gt;reference&lt;/a&gt; for the AST Matcher DSL. &lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

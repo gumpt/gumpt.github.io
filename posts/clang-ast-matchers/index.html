@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    
+        
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+
+<title>Clang AST Matchers - notes</title>
+<meta name="description" content="">
+
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="apple-touch-icon-precomposed" href="favicon.png">
+
+<link rel="stylesheet" href="css/style.css?rnd=1592623938" />
+
+
+
+<meta property="og:title" content="Clang AST Matchers" />
+<meta property="og:description" content="Playing with LLVM" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/clang-ast-matchers/" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Clang AST Matchers"/>
+<meta name="twitter:description" content="Playing with LLVM"/>
+
+
+
+
+
+
+
+
+    
+</head>
+<body>
+    <a class="skip-main" href="#main"></a>
+    <div class="container">
+        <header> 
+            
+                <h1 class="site-header">
+    <a href="/">notes</a>
+</h1>
+<nav>
+    
+    
+    <a class="" href="/posts/" title="Archive">Blog</a>
+    
+    <a class="" href="/books/" title="Books">Books</a>
+    
+    <a class="" href="/index.xml" title="Feed">Feed</a>
+    
+</nav>
+
+            
+        </header>
+        <main id="main" tabindex="-1"> 
+            
+
+    <article class="post">
+        <header>
+            <h1 class="post-title favorite">Clang AST Matchers</h1>
+        </header>
+        <div class="content">
+            <p>One way to cope with lots of possible submitters to a project, each of own may
+have their own definitions of quality, is to enforce a quality bar with
+tooling.  This means everything from running a linter to using static and
+runtime analysis to find dormant bugs.</p>
+<p>Quick list of some completely reasonable things to use:</p>
+<ul>
+<li>Linters: <code>clang-format</code>, <code>flint</code>, et al.</li>
+<li>Static analysis: Coverity, <code>scan-build</code>, cppcheck</li>
+<li>Runtime analysis: All of the sanitizers
+(<a href="//clang.llvm.org/docs/UndefinedBehaviorSanitizer.html">ubsan</a>,
+<a href="//clang.llvm.org/docs/AddressSanitizer.html">asan</a>,
+<a href="//clang.llvm.org/docs/ThreadSanitizer.html">tsan</a>)</li>
+</ul>
+<p>libtooling in llvm/clang provides an amazing library of functions to use when
+other tools don&rsquo;t give you the checks that you want.  The clang docs in general
+are high quality and the documentation on getting started with libtooling<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>
+is very helpful for getting started with using the pre-built tools to find
+common problems.</p>
+<p>libtooling also provides a handy list of helper functions so that you can write
+your own static analysis tool. There is
+a <a href="//clang.llvm.org/docs/LibASTMatchersTutorial.html">tutorial</a> for set
+of abstract syntax tree (AST, what the compiler builds in order to understand
+your code and uses to determine how to turn it into a real program) matcher
+interface, mostly because I thought the DSL it defined was really
+neat.</p>
+<p>The DSL lets you define some attibute of AST nodes you want to match on, where
+the attributes can be 1) the type of the node or 2) the type of any of the
+node&rsquo;s ancestors or children in 3) any sort of combination you think is worth
+looking at.  You can then define a callback action to perform when those nodes
+are found to either just log or automatically rewrite the found code.</p>
+<p>Let&rsquo;s say you wanted to build a tool to look for destructors which throw.  You
+could write an AST matcher for a destructor with a throw statement like the
+following:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">DeclarationMatcher ThrowDestructorMatcher <span style="color:#f92672">=</span>
+    cxxDestructorDecl(
+      hasDescendant(
+        cxxThrowExpr().bind(<span style="color:#e6db74">&#34;throw&#34;</span>)
+      )).bind(<span style="color:#e6db74">&#34;destructor&#34;</span>);
+</code></pre></div><p>Quick explanation:</p>
+<ul>
+<li><code>DeclarationMatcher</code> means this is a <code>Matcher&lt;Decl&gt;</code> so the root node of the
+AST we&rsquo;re going to get back will be of type <code>Decl</code>, which makes sense since
+we&rsquo;re looking for <code>cxxDestructorDecl</code>s.</li>
+<li><code>hasDescendant</code> belongs to a group of very neat generic matchers.  We don&rsquo;t
+need do any traversal on our own of children and subtrees, the DSL lets us
+specify the relationships we want.</li>
+<li>The <code>.bind()</code> call lets us define an identifier which will map to the nodes
+and let us retrieve them later on in our <code>MatchCallback</code> (the action to
+perform on finding one of these).</li>
+</ul>
+<p>That AST matcher isn&rsquo;t generic enough though &ndash; what if the exception being
+thrown isn&rsquo;t directly in the destructor, but instead in a function the
+destructor calls?  We&rsquo;d need to make it a little more generic:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">auto</span> Throws <span style="color:#f92672">=</span> hasDescendant(cxxThrowExpr().bind(<span style="color:#e6db74">&#34;throw&#34;</span>));
+<span style="color:#66d9ef">auto</span> FunctionWhichThrows <span style="color:#f92672">=</span> functionDecl(Throws).bind(<span style="color:#e6db74">&#34;throw_function&#34;</span>);
+<span style="color:#66d9ef">auto</span> CallsToFunctionWhichThrows <span style="color:#f92672">=</span>
+    hasDescendant(declRefExpr(to(FunctionWhichThrows)));
+DeclarationMatcher ThrowDestructorMatcher <span style="color:#f92672">=</span>
+    cxxDestructorDecl(anyOf(
+      Throws,
+      CallsToFunctionWhichThrows
+    )).bind(<span style="color:#e6db74">&#34;destructor&#34;</span>);
+</code></pre></div><p>And we can pull out &ldquo;CallsTo&rdquo; as its own idea, and reuse it to detect
+doubly-nested calls to throws.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">auto</span> CallsTo <span style="color:#f92672">=</span>
+    [](DeclarationMatcher dm) <span style="color:#f92672">-&gt;</span> DeclarationMatcher {
+      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">hasDescendant</span>(declRefExpr(to(dm)));
+    };
+
+<span style="color:#66d9ef">auto</span> CallsToCallsToFunctionWhichThrows <span style="color:#f92672">=</span> CallsTo(CallsToFunctionWhichThrows);
+</code></pre></div><p>That&rsquo;s so cool!</p>
+<p>One limitation, which may not be obvious if you&rsquo;re unaware of how C++
+compilation works, is that the AST parsing facilities libtooling provides are
+scoped to a single compilation/translation-unit only.  To oversimplify, the AST
+for a given function <code>foo</code> will not have access to the body of symbols which
+are not defined in the same place/file in which <code>foo</code> is defined.  A trick to
+cope with this is making everything you&rsquo;re interested in a single compilation
+unit similar to a precompiled header.</p>
+<p>The AST Matchers are really cool and powerful.  Playing with them made me feel
+like I had superpowers to go find bad patterns, whatever they may be and
+wherever they are.  At the very least, looking for smelly code at $WORK is much
+simpler with this out there.</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>The official documentation includes a pair of tutorials:</p>
+<ul>
+<li><a href="//clang.llvm.org/docs/RAVFrontendAction.html">Frontend Action tutorial</a></li>
+<li><a href="//clang.llvm.org/docs/LibASTMatchersTutorial.html">AST Matcher tutorial (again)</a></li>
+</ul>
+<p>and a very nice <a href="//clang.llvm.org/docs/LibASTMatchersReference.html">reference</a> for the AST Matcher DSL. <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+        </div>
+        
+
+    
+
+
+<div class="post-info">
+    
+    <div class="post-taxonomies">
+        
+            
+                <ul class="post-tags">
+                    
+                        <li><a href="tags/c&#43;&#43;">#c&#43;&#43;</a></li>
+                    
+                        <li><a href="tags/cpp">#cpp</a></li>
+                    
+                        <li><a href="tags/llvm">#llvm</a></li>
+                    
+                        <li><a href="tags/clang">#clang</a></li>
+                    
+                </ul>
+        
+    </div>
+</div>
+
+    </article>
+
+
+        </main>
+        <footer>
+            
+                
+                
+
+                <p>© mbg, 2020<br>
+Powered By <a target="_blank" href="https://gohugo.io/">Hugo</a>, (Mostly) <a target="_blank" href="https://github.com/mitrichius/hugo-theme-anubis">Anubis</a>.
+</p>
+            
+        </footer>
+    </div>
+</body>
+</html>
