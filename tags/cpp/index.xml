@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>cpp on notes</title>
+    <title>cpp on mbg</title>
     <link>https://blog.gum.pt/tags/cpp/</link>
-    <description>notes (cpp)</description>
+    <description>mbg (cpp)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Sat, 30 Sep 2017 00:00:00 +0000</lastBuildDate>
     
     <atom:link href="https://blog.gum.pt/tags/cpp/index.xml" rel="self" type="application/rss+xml" />
     
@@ -13,7 +14,7 @@
     <item>
       <title>Clang AST Matchers</title>
       <link>https://blog.gum.pt/posts/clang-ast-matchers/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 30 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>https://blog.gum.pt/posts/clang-ast-matchers/</guid>
       <description>&lt;p&gt;One way to cope with lots of possible submitters to a project, each of own may

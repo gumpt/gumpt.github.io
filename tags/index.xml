@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on notes</title>
+    <title>Tags on mbg</title>
     <link>https://blog.gum.pt/tags/</link>
-    <description>notes (Tags)</description>
+    <description>mbg (Tags)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 20 Jun 2020 12:23:26 -0700</lastBuildDate>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>meta on notes</title>
+    <title>meta on mbg</title>
     <link>https://blog.gum.pt/tags/meta/</link>
-    <description>notes (meta)</description>
+    <description>mbg (meta)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 20 Jun 2020 12:23:26 -0700</lastBuildDate>
@@ -13,10 +13,10 @@
     
     <item>
       <title>Purpose</title>
-      <link>https://blog.gum.pt/books/purpose/</link>
+      <link>https://blog.gum.pt/notes/purpose/</link>
       <pubDate>Sat, 20 Jun 2020 12:23:26 -0700</pubDate>
       
-      <guid>https://blog.gum.pt/books/purpose/</guid>
+      <guid>https://blog.gum.pt/notes/purpose/</guid>
       <description>&lt;p&gt;I read a lot and want to share.&lt;/p&gt;
 &lt;p&gt;I&amp;rsquo;m not the most prolific reader I know personally or know of online (those
 would be my oldest sister and Charity Majors, respectively), but I read enough

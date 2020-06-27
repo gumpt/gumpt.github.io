@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>culture on mbg</title>
+    <link>https://blog.gum.pt/tags/culture/</link>
+    <description>mbg (culture)</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 30 Mar 2018 00:00:00 +0000</lastBuildDate>
+    
+    <atom:link href="https://blog.gum.pt/tags/culture/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Recognizing learned helplessness</title>
+      <link>https://blog.gum.pt/posts/recognizing-learned-helplessness/</link>
+      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.gum.pt/posts/recognizing-learned-helplessness/</guid>
+      <description>&lt;p&gt;One of the most useful blog posts I&amp;rsquo;ve read is &lt;a href=&#34;//danluu.com&#34;&gt;Dan Luu&lt;/a&gt; on what
+he calls &lt;a href=&#34;//danluu.com/wat/&#34;&gt;&amp;ldquo;normalization of deviance&amp;rdquo;&lt;/a&gt;.  It covers a lot of
+different ways that the collective lowering and raising of standards can occur
+in large organizations. A hypothetical conversation described in the post is
+something I want to talk about more:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;*new person joins*
+new person: WTF WTF WTF WTF WTF
+old hands: yeah we know we&#39;re concerned about it
+new person: WTF WTF wTF wtf wtf w...
+*new person gets used to it*
+*new person #2 joins*
+new person #2: WTF WTF WTF WTF
+new person: yeah we know. we&#39;re concerned about it.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A lot of &amp;ldquo;war stories&amp;rdquo; from companies begin this way. The bit in this flow I
+have found painful and want to talk about more is&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;*new person gets used to it*
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A technical term for this is &lt;a href=&#34;//en.wikipedia.org/wiki/Learned_helplessness&#34;&gt;learned
+helplessness&lt;/a&gt;. All animals learn
+what in their environment they can and cannot change, and we will give up trying
+to change what we cannot control regardless of how painful the situation is. The
+term is typically used to describe much more pernicious situations than bad
+engineering conditions at a company, but it still applies.&lt;/p&gt;
+&lt;p&gt;Seniority doesn&amp;rsquo;t necessarily mean better problem recognition.  The most useful
+signal for damaging parts of your workflow comes from new sets of eyes, no
+matter their level or previous domain experience. That they can see these
+problems most clearly is in tension with the desire to not rock the boat while
+still green in a role.&lt;/p&gt;
+&lt;p&gt;People who recognize broken systems may try to fix them. If it&amp;rsquo;s the sort of
+system that requires the VP&amp;rsquo;s hammer, from paucity of support or strength of
+opposition they give up or burn out. They don&amp;rsquo;t tilt at that windmill
+again. Bitterness at a failure or a lack of support lingers, and what&amp;rsquo;s learned
+about the company and wider organization can carry over to future projects.&lt;/p&gt;
+&lt;p&gt;Knowing this is happening helps! It&amp;rsquo;s easy to carry bitterness of past work
+around. While it can feel important to be right in all discussions, it&amp;rsquo;s more
+important to be kind. Stop yourself before you&amp;rsquo;re a &lt;a href=&#34;//www.brendangregg.com/blog/2017-11-13/brilliant-jerks.html&#34;&gt;&amp;ldquo;selfless
+jerk,&amp;quot;&lt;/a&gt; isolated in
+your quest to be a martyr for the company. This is where self-awareness and
+knowing what&amp;rsquo;s happening helps course-correct.&lt;/p&gt;
+&lt;p&gt;It is okay to give up and move on from certain battles. Not everything can be
+fixed, but bringing frustration into future projects isn&amp;rsquo;t helpful or a sign of
+grizzled wisdom. Don&amp;rsquo;t let toxicity drag you down.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
