@@ -3,17 +3,42 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://blog.gum.pt/categories/</loc>
-    <lastmod>2020-06-20T12:23:26-07:00</lastmod>
+    <loc>https://blog.gum.pt/categories/books/</loc>
+    <lastmod>2020-09-27T21:19:02-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://blog.gum.pt/categories/explaining-myself/</loc>
-    <lastmod>2020-06-20T12:23:26-07:00</lastmod>
+    <loc>https://blog.gum.pt/tags/capitalism/</loc>
+    <lastmod>2020-09-27T21:19:02-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.gum.pt/categories/</loc>
+    <lastmod>2020-09-27T21:19:02-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.gum.pt/notes/having-and-being-had/</loc>
+    <lastmod>2020-09-27T21:19:02-07:00</lastmod>
   </url>
   
   <url>
     <loc>https://blog.gum.pt/</loc>
+    <lastmod>2020-09-27T21:19:02-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.gum.pt/notes/</loc>
+    <lastmod>2020-09-27T21:19:02-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.gum.pt/tags/</loc>
+    <lastmod>2020-09-27T21:19:02-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://blog.gum.pt/categories/explaining-myself/</loc>
     <lastmod>2020-06-20T12:23:26-07:00</lastmod>
   </url>
   
@@ -23,17 +48,7 @@
   </url>
   
   <url>
-    <loc>https://blog.gum.pt/notes/</loc>
-    <lastmod>2020-06-20T12:23:26-07:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://blog.gum.pt/notes/purpose/</loc>
-    <lastmod>2020-06-20T12:23:26-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://blog.gum.pt/tags/</loc>
     <lastmod>2020-06-20T12:23:26-07:00</lastmod>
   </url>
   
