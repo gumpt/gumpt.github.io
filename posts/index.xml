@@ -18,7 +18,7 @@
       
       <guid>https://blog.gum.pt/posts/recognizing-learned-helplessness/</guid>
       <description>&lt;p&gt;One of the most useful blog posts I&amp;rsquo;ve read is &lt;a href=&#34;//danluu.com&#34;&gt;Dan Luu&lt;/a&gt; on what
-he calls &lt;a href=&#34;//danluu.com/wat/&#34;&gt;&amp;ldquo;normalization of deviance&amp;rdquo;&lt;/a&gt;.  It covers a lot of
+he calls &lt;a href=&#34;//danluu.com/wat/&#34;&gt;&amp;ldquo;normalization of deviance.&amp;quot;&lt;/a&gt; It covers a lot of
 different ways that the collective lowering and raising of standards can occur
 in large organizations. A hypothetical conversation described in the post is
 something I want to talk about more:&lt;/p&gt;
@@ -41,16 +41,16 @@ what in their environment they can and cannot change, and we will give up trying
 to change what we cannot control regardless of how painful the situation is. The
 term is typically used to describe much more pernicious situations than bad
 engineering conditions at a company, but it still applies.&lt;/p&gt;
-&lt;p&gt;Seniority doesn&amp;rsquo;t necessarily mean better problem recognition.  The most useful
-signal for damaging parts of your workflow comes from new sets of eyes, no
-matter their level or previous domain experience. That they can see these
-problems most clearly is in tension with the desire to not rock the boat while
-still green in a role.&lt;/p&gt;
-&lt;p&gt;People who recognize broken systems may try to fix them. If it&amp;rsquo;s the sort of
-system that requires the VP&amp;rsquo;s hammer, from paucity of support or strength of
-opposition they give up or burn out. They don&amp;rsquo;t tilt at that windmill
-again. Bitterness at a failure or a lack of support lingers, and what&amp;rsquo;s learned
-about the company and wider organization can carry over to future projects.&lt;/p&gt;
+&lt;p&gt;The most useful signal for damaging parts of your workflow comes from new sets
+of eyes, no matter their level or previous domain experience. Seniority doesn&amp;rsquo;t
+necessarily mean better problem recognition. New people usually can see the
+problems most clearly, while articulating them is in tension with the desire to
+not rock the boat while still green in a role.&lt;/p&gt;
+&lt;p&gt;People who recognize broken systems may try to fix them, but if they try for
+long enough they burn out. Bitterness at a failure or a lack of organizational
+support lingers, and what&amp;rsquo;s learned about the company and wider organization can
+carry over to future projects. People who are not given the support to fix their
+broken teams can turn into bitter employees even after they change teams.&lt;/p&gt;
 &lt;p&gt;Knowing this is happening helps! It&amp;rsquo;s easy to carry bitterness of past work
 around. While it can feel important to be right in all discussions, it&amp;rsquo;s more
 important to be kind. Stop yourself before you&amp;rsquo;re a &lt;a href=&#34;//www.brendangregg.com/blog/2017-11-13/brilliant-jerks.html&#34;&gt;&amp;ldquo;selfless
@@ -160,7 +160,7 @@ simpler with this out there.&lt;/p&gt;
 &lt;li&gt;&lt;a href=&#34;//clang.llvm.org/docs/RAVFrontendAction.html&#34;&gt;Frontend Action tutorial&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;//clang.llvm.org/docs/LibASTMatchersTutorial.html&#34;&gt;AST Matcher tutorial (again)&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;and a very nice &lt;a href=&#34;//clang.llvm.org/docs/LibASTMatchersReference.html&#34;&gt;reference&lt;/a&gt; for the AST Matcher DSL. &lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;and a very nice &lt;a href=&#34;//clang.llvm.org/docs/LibASTMatchersReference.html&#34;&gt;reference&lt;/a&gt; for the AST Matcher DSL.&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/section&gt;
